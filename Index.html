@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MathLive · SMK Bina Adzkia</title>
+<style>
+:root{--n9:#061330;--n8:#0a1f4d;--n7:#0f2e6b;--n5:#1e4fa8;--gold:#ffc233;--ok:#22c55e;--bad:#ef4444;--card:#f4f7ff;--ink:#0a1f4d;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;min-height:100vh;font-family:Tahoma,Verdana,sans-serif;color:#fff;background:linear-gradient(135deg,#061330,#0a1f4d,#0f2e6b,#061330);background-size:300% 300%;animation:bg 18s ease infinite}
+@keyframes bg{50%{background-position:100% 50%}}
+.bub{position:fixed;bottom:-80px;border-radius:50%;background:rgba(255,255,255,.06);animation:up linear infinite;pointer-events:none}@keyframes up{to{transform:translateY(-125vh)}}
+#app{position:relative;max-width:560px;margin:auto;padding:12px 12px 90px}
+.hero{text-align:center;margin:18px 0}.hero h1{margin:6px 0 0;font-size:34px;letter-spacing:1px}.hero p{margin:4px;color:#9db7ee}
+.logo{width:72px;height:72px;margin:auto;border-radius:20px;background:linear-gradient(135deg,var(--gold),#ff8a3d);color:var(--n9);font-size:44px;font-weight:700;display:grid;place-items:center;animation:floaty 3s ease-in-out infinite;box-shadow:0 8px 30px #ffc23355}
+@keyframes floaty{50%{transform:translateY(-8px) rotate(4deg)}}
+.card,.pan{background:rgba(15,46,107,.75);border:1px solid #2d5bb8;border-radius:18px;padding:14px;margin-bottom:12px;backdrop-filter:blur(6px);animation:in .5s both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+input,select{width:100%;padding:13px;margin:5px 0;border-radius:12px;border:2px solid #2d5bb8;background:var(--n9);color:#fff;font:inherit;font-size:16px}
+input:focus,select:focus{outline:0;border-color:var(--gold)}label{font-size:13px;color:#9db7ee;display:block;margin-top:6px}label.ck{display:flex;gap:8px;align-items:center}label.ck input{width:auto;margin:0}
+.btn{width:100%;padding:14px;margin-top:8px;border:0;border-radius:14px;background:linear-gradient(180deg,#ffd45c,var(--gold));color:var(--n9);font:700 16px Tahoma,Verdana,sans-serif;cursor:pointer;box-shadow:0 4px 0 #b8860b;transition:transform .1s}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b8860b}
+.ghost{background:transparent;border:1px solid #4a74c9;color:#cfe0ff;border-radius:12px;padding:10px 14px;font:inherit;cursor:pointer}
+.tabs{display:flex;gap:6px;margin-bottom:6px}.tabs button{flex:1;padding:10px;border-radius:12px;border:0;background:var(--n9);color:#9db7ee;font:700 14px Tahoma;cursor:pointer}.tabs .on{background:var(--gold);color:var(--n9)}
+#err{color:#ff8b8b;min-height:18px;font-size:13px;margin-top:6px}.hint{font-size:12px;color:#9db7ee;margin:6px 0 0}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}.top b{flex:1;font-size:15px}.badge{padding:4px 9px;border-radius:99px;background:#0006;font-size:11px}.badge.on{color:#4ade80}
+.qcard{background:var(--card);color:var(--ink);border-radius:20px;padding:14px;margin-bottom:12px;border:3px solid var(--n5);box-shadow:0 10px 30px #0006;animation:in .5s both}
+.qh{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.tag{font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px;border:2px solid var(--ink)}.tag:nth-child(2){background:var(--gold)}
+.qrow{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:110px}.qtxt{font-size:clamp(28px,8.4vw,50px);font-weight:700;line-height:1.5;word-break:break-word}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.78em;line-height:1.1;margin:0 .12em}.fr i{font-style:normal;border-bottom:.08em solid currentColor;padding:0 .25em}.fr u{text-decoration:none}.w{font-size:.9em;margin-right:.05em}
+.ring{position:relative;width:84px;height:84px;flex:none}.ring svg{width:100%;height:100%}.rb{fill:none;stroke:#cdd9f3;stroke-width:8}.rf{fill:none;stroke:var(--n5);stroke-width:8;stroke-linecap:round;stroke-dasharray:226;transition:stroke-dashoffset .1s linear}
+.ring.lo .rf{stroke:#f59e0b}.ring.cr .rf{stroke:var(--bad)}.ring.cr{animation:pulse .5s infinite}@keyframes pulse{50%{transform:scale(1.1)}}
+.rn{position:absolute;inset:0;display:grid;place-content:center;text-align:center}.rn b{font-size:26px;line-height:1}.rn small{font-size:9px;color:#5b6b92}
+.bar{height:10px;border-radius:9px;background:#cdd9f3;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--n5),#4f8cff);transition:width .1s linear}
+.bt{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:#5b6b92;margin-top:4px}
+#res{margin-top:8px;font-weight:700;font-size:15px;text-align:center}#res .g{color:#15803d}#res .r{color:#b91c1c;display:inline-block;animation:shake .5s}
+@keyframes shake{25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+.pan h3{margin:0 0 8px;font-size:12px;letter-spacing:1px;color:var(--gold)}
+.fast{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;min-height:84px}.fast:empty::after{content:"Menunggu jawaban pertama…";color:#9db7ee;font-size:13px;align-self:center}
+.chip{flex:none;min-width:98px;background:#dbe8ff;color:var(--ink);border-radius:12px;padding:6px;text-align:center;border:2px solid var(--n5);animation:pop .5s cubic-bezier(.3,1.6,.5,1) both;font-size:11px}
+@keyframes pop{from{transform:scale(.3);opacity:0}}.chip.ok{background:#c6f6d5;border-color:#22c55e}.chip.bad{background:#fecaca;border-color:var(--bad)}
+.av{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;font-weight:700;font-size:14px;color:#fff;flex:none}.chip .nm{font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:92px;margin:auto}
+.board{position:relative}.row{position:absolute;left:0;right:0;height:44px;display:flex;align-items:center;gap:8px;padding:0 10px;background:var(--card);color:var(--ink);border-radius:12px;border:2px solid var(--n5);transition:transform .7s cubic-bezier(.3,1.2,.4,1);animation:slide .5s both;font-size:14px}
+@keyframes slide{from{opacity:0;margin-left:-30px}}.row:nth-child(1){background:#ffe9a8}.rk{width:18px;font-weight:700}.row .nm{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.row .nm small{font-weight:400;color:#5b6b92;margin-left:5px}.xp{font-weight:700;min-width:70px;text-align:right}
+.dl{position:absolute;right:12px;top:-12px;color:#15803d;font-weight:700;font-size:13px;animation:fl 1.6s both;pointer-events:none}@keyframes fl{from{opacity:0;transform:translateY(14px)}20%{opacity:1}to{opacity:0;transform:translateY(-10px)}}
+.code{font-size:58px;font-weight:700;letter-spacing:10px;text-align:center;color:var(--gold);animation:pulse 2s infinite}.mas{font-size:60px;text-align:center;animation:floaty 2.4s infinite}
+.dots span{display:inline-block;animation:bn 1s infinite}.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}@keyframes bn{50%{transform:translateY(-8px)}}
+.pls{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}.pl{background:#0007;border-radius:99px;padding:6px 12px;font-size:13px;animation:pop .4s both}
+.ctl{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;align-items:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:#061330ee;border-top:1px solid #2d5bb8;max-width:560px;margin:auto;z-index:5}.ctl:empty{display:none}.ctl .btn{margin:0}.ctl label{margin:0;white-space:nowrap}
+#nx[data-c]::after{content:" (" attr(data-c) ")"}
+.burst{position:fixed;left:50%;top:55%;z-index:9;pointer-events:none}.burst i{position:absolute;font-style:normal;font-size:26px;animation:bs 1.3s ease-out both}@keyframes bs{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+#toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--gold);color:var(--n9);padding:9px 16px;border-radius:99px;font-weight:700;font-size:13px;z-index:20;opacity:0;transition:opacity .3s;pointer-events:none}#toast.on{opacity:1}
+.trophy{font-size:70px;text-align:center;animation:floaty 2s infinite}
+</style></head><body><div id="app"></div><div id="toast"></div>
+<script>
+"use strict";
+/* ===== BANK 500 SOAL (deterministik) ===== */
+const LV=[0,{n:"Mudah",s:10,x:100},{n:"Cukup",s:15,x:150},{n:"Sedang",s:25,x:250},{n:"Sulit",s:35,x:350},{n:"Master",s:50,x:500}];
+const CN={N:"Bilangan Asli",K:"Perkalian",P:"Pecahan"};
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a),fr=(n,d)=>{const g=gcd(n,d)||1;return[n/g,d/g]};
+let sd=20261020;const rnd=()=>{sd=sd+0x6D2B79F5|0;let t=Math.imul(sd^sd>>>15,1|sd);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1)),pk=a=>a[ri(0,a.length-1)];
+const fa=(x,y)=>fr(x[0]*y[1]+y[0]*x[1],x[1]*y[1]),fs=(x,y)=>fr(x[0]*y[1]-y[0]*x[1],x[1]*y[1]),fd=(x,y)=>fr(x[0]*y[1],x[1]*y[0]),cmp=(p,q)=>p[0]*q[1]-q[0]*p[1];
+const val=o=>[o.w*o.d+o.n,o.d],pf=d=>({w:0,n:ri(1,d-1),d}),mf=d=>({w:ri(1,4),n:ri(1,d-1),d});
+const fh=o=>(o.w?`<b class=w>${o.w}</b>`:"")+`<span class=fr><i>${o.n}</i><u>${o.d}</u></span>`,ft=o=>(o.w?o.w+" ":"")+o.n+"/"+o.d;
+const fmt=a=>a[1]==1?""+a[0]:a[0]>a[1]?Math.floor(a[0]/a[1])+" "+a[0]%a[1]+"/"+a[1]:a[0]+"/"+a[1];
+function gN(L){const m=[0,20,60,300,1500,9000][L],k=[0,2,3,3,4,5][L];let v=ri(Math.max(5,m/4|0),m),h=""+v;for(let i=1;i<k;i++){const x=ri(2,Math.max(3,m*.6|0));let o=rnd()<.5?"+":"−";if(o=="−"&&x>v)o="+";v+=o=="+"?x:-x;h+=` ${o} ${x}`}return{h,t:h,a:[v,1]}}
+function gM(L){const A=[0,[11,25],[12,60],[100,300],[120,500],[200,999]][L],B=[0,[2,5],[2,9],[3,9],[4,9],[6,9]][L],a=ri(...A),b=ri(...B);let p=a*b,h=rnd()<.4?`${b} × ${a}`:`${a} × ${b}`;if(L>=4){const c=ri(20,Math.min(p-1,L==4?400:900)),o=rnd()<.5?"+":"−";h+=` ${o} ${c}`;p=o=="+"?p+c:p-c}return{h,t:h,a:[p,1]}}
+function gF(L){const D=[0,[3,4,5,6,8],[2,3,4,5,6,8],[3,4,5,6,8],[2,3,4,5,6,8],[2,3,4,5,6]][L];let x,y,z,op=pk(["+","−"]),a,h,t;
+if(L<=3){if(L==1){const d=pk(D);x=pf(d);y=pf(d)}else if(L==2){x=pf(pk(D));do y=pf(pk(D));while(y.d==x.d)}else{x=mf(pk(D));y=pk([mf,pf])(pk(D))}
+if(cmp(val(x),val(y))<0)[x,y]=[y,x];if(!cmp(val(x),val(y)))op="+";a=op=="+"?fa(val(x),val(y)):fs(val(x),val(y));h=fh(x)+` ${op} `+fh(y);t=ft(x)+` ${op} `+ft(y)}
+else if(L==4){x=pk([mf,pf])(pk(D));y=pf(pk(D));a=fd(val(x),val(y));h=fh(x)+" ÷ "+fh(y);t=ft(x)+" ÷ "+ft(y)}
+else{x=pk([mf,pf])(pk(D));y=pf(pk(D));z=pk([mf,pf])(pk(D));const q=fd(val(x),val(y));if(op=="−"&&cmp(q,val(z))<=0)op="+";a=op=="+"?fa(q,val(z)):fs(q,val(z));h=fh(x)+" ÷ "+fh(y)+` ${op} `+fh(z);t=ft(x)+" ÷ "+ft(y)+` ${op} `+ft(z)}
+return{h,t,a}}
+const BANK=[];(()=>{const seen=new Set(),Z=[0,[120,90,90],[30,22,23],[30,22,23],[10,8,7],[10,8,7]];let tr=0;for(let L=1;L<=5;L++)[["N",gN],["K",gM],["P",gF]].forEach(([c,g],j)=>{let k=0;while(k<Z[L][j]){const q=g(L);if(seen.has(c+q.t)&&tr++<400)continue;seen.add(c+q.t);BANK.push({L,c,...q});k++}});for(let i=BANK.length-1;i>0;i--){const j=ri(0,i);[BANK[i],BANK[j]]=[BANK[j],BANK[i]]}BANK.forEach((q,i)=>q.id=i)})();
+function pick(n,m){const sh=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);return sh(/^[1-5]$/.test(m)?BANK.filter(q=>q.L==+m):BANK).slice(0,n).map(q=>q.id)}
+/* ===== BACKEND: db (online) atau localStorage (satu perangkat) ===== */
+const M={},lsG=k=>{try{const v=localStorage.getItem(k);if(v!=null)return v}catch(e){}return M[k]??null},lsS=(k,v)=>{M[k]=v;try{localStorage.setItem(k,v)}catch(e){}},lsK=()=>{const s=new Set(Object.keys(M));try{for(let i=0;i<localStorage.length;i++)s.add(localStorage.key(i))}catch(e){}return[...s]};
+const B={mode:"lokal",R:[],P:[],lr:"",lp:"",
+async init(){try{if(window.claude&&claude.use){const d=await claude.use("db");if(d){this.d=d;this.mode="online"}}}catch(e){}
+if(this.mode=="lokal")setInterval(()=>{const r=lsG("bk:room")||"",ps=lsK().filter(k=>k.startsWith("bk:p:")).map(k=>lsG(k)).filter(Boolean),p=ps.join("|");if(r!==this.lr){this.lr=r;this.R.forEach(f=>f(r?JSON.parse(r):null))}if(p!==this.lp){this.lp=p;this.P.forEach(f=>f(ps.map(s=>JSON.parse(s))))}},350)},
+async setRoom(o){if(this.d)await this.d.doc("quiz/room").set(o);else lsS("bk:room",JSON.stringify(o))},
+async setP(id,o){if(this.d)await this.d.doc("players/"+id).set(JSON.parse(JSON.stringify(o)));else lsS("bk:p:"+id,JSON.stringify(o))},
+watchRoom(f){if(this.d)this.d.doc("quiz/room").onSnapshot(s=>f(s.exists?s.data():null),e=>toast("Sinkron gagal"));else this.R.push(f)},
+watchP(f){if(this.d)this.d.collection("players").onSnapshot(s=>f(s.docs.map(x=>x.data())),e=>toast("Sinkron gagal"));else this.P.push(f)},
+async clear(){if(this.d){const s=await this.d.collection("players").get();await Promise.all(s.docs.map(x=>this.d.doc("players/"+x.id).delete()))}else lsK().filter(k=>k.startsWith("bk:p:")).forEach(k=>{delete M[k];try{localStorage.removeItem(k)}catch(e){}})}};
+/* ===== STATE & UTIL ===== */
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let room,loaded=false,players=[],role=null,me=null,ui=false,cur=-1,t0=0,answered=false,lastSt="",lastQ=-2,lastCtl="",nextAt=0,nexting=0,revDone={},missed={},shown={};
+const CM=new Map(),BM=new Map(),PM=new Map();
+function toast(t){const e=$("#toast");e.textContent=t;e.className="on";clearTimeout(toast.t);toast.t=setTimeout(()=>e.className="",2500)}
+const q=()=>room&&room.qi>=0&&room.ids?BANK[room.ids[room.qi]]:null,rank=()=>[...players].sort((a,b)=>b.xp-a.xp||a.name.localeCompare(b.name));
+const hue=s=>{let h=0;for(const c of s)h=h*31+c.charCodeAt(0)|0;return Math.abs(h)%360};
+function avt(e,n){e.textContent=(n[0]||"?").toUpperCase();e.style.background=`hsl(${hue(n)} 60% 42%)`}
+function keyed(box,Mp,items,mk,up){const ids=new Set(items.map(x=>x.id));for(const[k,e]of Mp)if(!ids.has(k)){e.remove();Mp.delete(k)}items.forEach((x,i)=>{let e=Mp.get(x.id);if(!e){e=mk(x);Mp.set(x.id,e);box.appendChild(e)}up(e,x,i)})}
+function cnt(e,to){const from=+e._v||0;e._v=to;if(from===to){e.textContent=to+" XP";return}const s=performance.now();(function f(n){const k=Math.min(1,(n-s)/700);e.textContent=Math.round(from+(to-from)*k)+" XP";if(k<1&&e._v===to)requestAnimationFrame(f)})(s)}
+function burst(){const b=document.createElement("div");b.className="burst";b.innerHTML=Array.from({length:16},()=>`<i style="--x:${Math.round(Math.random()*320-160)}px;--y:${-Math.round(60+Math.random()*220)}px;--r:${Math.round(Math.random()*180-90)}deg">${pk(["⭐","✨","🎉","🔥"])}</i>`).join("");document.body.appendChild(b);setTimeout(()=>b.remove(),1500)}
+function parse(s){s=s.replace(/,/g,".").trim();let m;if(m=s.match(/^(\d+)$/))return[+m[1],1];if(m=s.match(/^(\d+)\s*\/\s*(\d+)$/))return+m[2]?fr(+m[1],+m[2]):null;if(m=s.match(/^(\d+)\s+(\d+)\s*\/\s*(\d+)$/))return+m[3]?fr(+m[1]*+m[3]+ +m[2],+m[3]):null;return null}
+/* ===== SCREENS ===== */
+function login(){role=null;me=null;ui=false;CM.clear();BM.clear();PM.clear();lastQ=-2;lastCtl="";const sv=JSON.parse(lsG("bk:me")||"{}");
+$("#app").innerHTML=`<div class=hero><div class=logo>Σ</div><h1>MathLive</h1><p>SMK Bina Adzkia · Kuis Operasi Bilangan</p></div><div class=card><div class=tabs><button class=on data-t=s>Siswa</button><button data-t=a>Admin</button></div>
+<div id=fs><input id=nm placeholder="Nama siswa" maxlength=24 value="${esc(sv.n||"")}"><input id=kl placeholder="Kelas (mis. X TJKT 1)" maxlength=16 value="${esc(sv.k||"")}"><input id=kd placeholder="Kode room (4 angka)" inputmode=numeric maxlength=4><button class=btn id=go>Masuk Room</button></div>
+<div id=fa hidden><input id=au placeholder=Username autocapitalize=none><input id=ap type=password placeholder=Password><button class=btn id=ga>Masuk Admin</button></div><div id=err></div></div><p class=hint style="text-align:center">Mode: ${B.mode=="online"?"Online (multi-perangkat)":"Lokal (satu perangkat/browser)"}</p>`;
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x==b));$("#fs").hidden=b.dataset.t!="s";$("#fa").hidden=b.dataset.t!="a"});
+const er=t=>$("#err").textContent=t;
+$("#go").onclick=()=>{const n=$("#nm").value.trim(),k=$("#kl").value.trim(),c=$("#kd").value.trim();if(!n||!k||!c)return er("Lengkapi nama, kelas, dan kode room");if(!loaded)return er("Menghubungkan… coba lagi");if(!room||room.code!==c||room.st==="end")return er("Room tidak ditemukan atau sudah selesai");
+lsS("bk:me",JSON.stringify({n,k}));const id="p"+Math.abs([...(n+k+c).toLowerCase()].reduce((h,ch)=>h*31+ch.charCodeAt(0)|0,7)).toString(36);
+me=players.find(p=>p.id===id)||{id,name:n,cls:k,code:c,xp:0,streak:0,ok:0,no:0,last:0,lq:-1,ans:{}};me.ans=me.ans||{};role="s";B.setP(id,me);game()};
+$("#ga").onclick=()=>{if($("#au").value!=="admin"||$("#ap").value!=="admin")return er("Username atau password salah");role="a";room&&room.st!=="end"?game():setup()};}
+function setup(){$("#app").innerHTML=`<div class=hero><div class=logo>Σ</div><h1>Panel Admin</h1></div><div class=card><label>Judul kuis</label><input id=tt value="Operasi Bilangan"><label>Jumlah soal</label><select id=qn><option>10<option>20<option selected>30<option>50<option>100</select><label>Tingkat kesulitan</label><select id=md><option value=a>Acak campuran (L1 60% · L2 15% · L3 15% · L4 5% · L5 5%)${[1,2,3,4,5].map(l=>`<option value=${l}>Level ${l} · ${LV[l].n} (${LV[l].s} dtk · ${LV[l].x} XP)`).join("")}</select><label class=ck><input type=checkbox id=ao checked> Soal berikutnya otomatis</label><button class=btn id=mk>Buat Room</button><p class=hint>Bank soal: ${BANK.length} soal diacak · L1 300 · L2 75 · L3 75 · L4 25 · L5 25</p><button class=ghost id=bk style="width:100%;margin-top:8px">Kembali</button></div>`;
+$("#bk").onclick=login;$("#mk").onclick=async()=>{const o={code:""+(1000+Math.floor(Math.random()*9000)),title:$("#tt").value||"Kuis",ids:pick(+$("#qn").value,$("#md").value),qi:-1,st:"lobby",ts:0,auto:$("#ao").checked?1:0};await B.clear();players=[];revDone={};nexting=0;cur=-1;missed={};shown={};await B.setRoom(o);room=o;game()}}
+function game(){ui=true;CM.clear();BM.clear();PM.clear();lastQ=-2;lastCtl="";
+$("#app").innerHTML=`<div class=top><b>SMK Bina Adzkia</b><span id=rc class=badge></span><span class="badge ${B.mode=="online"?"on":""}">● ${B.mode=="online"?"Online":"Lokal"}</span><button class=ghost id=out style="padding:5px 10px">Keluar</button></div>
+<section id=lobby><div class=pan style="text-align:center"><div class=mas>🧠</div><div class=hint>KODE ROOM</div><div class=code id=cd></div><div class=dots>Menunggu peserta <span>•</span><span>•</span><span>•</span></div><div class=pls id=pls></div></div></section>
+<section id=live hidden><div class=qcard id=qc><div class=qh><span class=tag id=qn></span><span class=tag id=ql></span><span class=tag id=qk></span></div><div class=qrow><div class=qtxt id=qt></div><div class=ring id=ring><svg viewBox="0 0 84 84"><circle class=rb cx=42 cy=42 r=36 /><circle id=rg class=rf cx=42 cy=42 r=36 transform="rotate(-90 42 42)"/></svg><div class=rn><b id=rs>0</b><small>DTK</small></div></div></div><div class=bar><i id=bi></i></div><div class=bt><span>WAKTU MENJAWAB</span><span id=sisa></span></div><div id=res></div></div>
+<div class=pan id=aa hidden><input id=ans placeholder="Ketik jawabanmu…" autocomplete=off autocapitalize=none enterkeyhint=send><button class=btn id=sub>Kirim Jawaban</button><div class=hint id=hint></div></div>
+<div class=pan><h3>TERCEPAT MENJAWAB</h3><div class=fast id=fast></div></div></section>
+<section id=fin hidden><div class=pan style="text-align:center"><div class=trophy>🏆</div><h2 id=champ style="margin:6px 0"></h2><div id=mine class=hint></div></div></section>
+<div class=pan id=bp hidden><h3>PAPAN SKOR</h3><div class=board id=board></div><div class=hint id=myrank></div></div><div class=ctl id=ctl></div>`;
+$("#out").onclick=login;$("#sub").onclick=submit;$("#ans").onkeydown=e=>{if(e.key=="Enter")submit()};sync()}
+/* ===== SYNC (render) ===== */
+function sync(){if(!ui||!room||!role)return;if(role=="s"&&room.code!==me.code){toast("Room diganti admin");return login()}
+const st=room.st,Q=q();$("#rc").textContent="Room "+room.code;$("#lobby").hidden=st!="lobby";$("#live").hidden=!(st=="q"||st=="rev");$("#fin").hidden=st!="end";$("#bp").hidden=st=="lobby";
+if(role=="s"){if(st=="q"&&room.qi!==cur){cur=room.qi;t0=Date.now();answered=!!me.ans[cur];$("#ans").value="";$("#ans").disabled=answered}
+if(st=="rev"&&!me.ans[room.qi]&&!missed[room.qi]){missed[room.qi]=1;me.streak=0;me.no++;me.ans[room.qi]={v:"",ok:0,t:null,p:0};me.last=0;me.lq=room.qi;B.setP(me.id,me)}}
+else if(st!==lastSt){if(st=="rev")nextAt=Date.now()+5000;nexting=0}lastSt=st;
+if(st=="lobby"){$("#cd").textContent=room.code;keyed($("#pls"),PM,players,p=>{const e=document.createElement("span");e.className="pl";return e},(e,p)=>e.textContent=p.name+" · "+p.cls)}
+if(Q&&(st=="q"||st=="rev")){$("#qn").textContent=`SOAL ${room.qi+1}/${room.ids.length}`;$("#ql").textContent=`Level ${Q.L} · ${LV[Q.L].n} · ${LV[Q.L].x} XP`;$("#qk").textContent=CN[Q.c];$("#qt").innerHTML=Q.h;
+$("#hint").textContent=(Q.c=="P"?"Tulis pecahan 3/4 atau campuran 1 2/3 · ":"Jawab dengan bilangan bulat · ")+(me?`🔥 Streak ${me.streak} · bonus ×${(1+.1*Math.min(me.streak,5)).toFixed(1)}`:"");
+$("#aa").hidden=!(role=="s"&&st=="q");
+if(lastQ!==room.qi){lastQ=room.qi;$("#fast").innerHTML="";CM.clear();$("#res").innerHTML="";const c=$("#qc");c.style.animation="none";void c.offsetWidth;c.style.animation=""}
+const fl=players.filter(p=>p.ans&&p.ans[room.qi]&&p.ans[room.qi].t!=null).sort((a,b)=>a.ans[room.qi].t-b.ans[room.qi].t);
+keyed($("#fast"),CM,fl,p=>{const e=document.createElement("div");e.className="chip";e.innerHTML="<span class=av></span><span class=nm></span><div class=tm></div><b class=vl></b><div class=xx></div>";avt(e.firstChild,p.name);e.querySelector(".nm").textContent=p.name;return e},(e,p,i)=>{const a=p.ans[room.qi],r=st=="rev";e.style.order=i;e.className="chip"+(r?a.ok?" ok":" bad":"");e.querySelector(".tm").textContent="⏱ "+a.t.toFixed(1)+"s";e.querySelector(".vl").textContent=r?(a.v||"—")+(a.ok?" ✓":" ✗"):"•••";e.querySelector(".xx").textContent="⭐ "+p.xp+(r&&a.ok?" (+"+a.p+")":"")});
+if(st=="rev"){let h=`<span class=g>Jawaban benar: ${fmt(Q.a)}</span>`;if(me){const a=me.ans[room.qi];if(a&&a.ok){h+=`<br><span class=g>✅ Benar! +${a.p} XP</span>`;if(!shown[room.qi]){shown[room.qi]=1;burst()}}else h+=`<br><span class=r>❌ ${a&&a.v?"Belum tepat":"Waktu habis"}</span>`}$("#res").innerHTML=h}}
+if(st!="lobby"){const all=rank(),shownL=st=="end"?all:all.slice(0,8);$("#board").style.height=shownL.length*50+"px";
+keyed($("#board"),BM,shownL,p=>{const e=document.createElement("div");e.className="row";e.innerHTML="<span class=rk></span><span class=av></span><span class=nm></span><span class=xp></span><span class=dl></span>";avt(e.children[1],p.name);e.children[2].innerHTML=`${esc(p.name)}<small>${esc(p.cls)}</small>`;return e},(e,p,i)=>{e.style.transform=`translateY(${i*50}px)`;e.children[0].textContent=i+1;cnt(e.children[3],p.xp);const d=st=="rev"&&p.lq===room.qi&&p.last>0?"+"+p.last:"";if(e._d!==d){e._d=d;e.children[4].textContent=d;e.children[4].style.animation="none";void e.offsetWidth;e.children[4].style.animation=""}});
+if(me){const i=all.findIndex(p=>p.id===me.id);$("#myrank").textContent=i>=0?`Peringkatmu: #${i+1} dari ${all.length} · ${all[i].xp} XP`:""}}
+if(st=="end"){const w=rank()[0];$("#champ").textContent=w?`Juara: ${w.name} (${w.xp} XP)`:"Kuis selesai";$("#mine").textContent=me?`Hasilmu: ${me.ok} benar · ${me.no} salah · ${me.xp} XP`:""}
+if(role=="a")ctl()}
+function ctl(){const st=room.st,k=st+room.qi+room.auto+players.length*(st=="lobby");if(k===lastCtl)return;lastCtl=k;const c=$("#ctl");
+c.innerHTML=st=="lobby"?`<button class=btn id=go2>▶ Mulai Kuis (${room.ids.length} soal)</button>`:st=="q"?`<button class=btn id=rv>Tampilkan Jawaban</button><button class=ghost id=ed>Akhiri</button>`:st=="rev"?`<button class=btn id=nx data-c="">Soal Berikutnya</button><label><input type=checkbox id=au2 ${room.auto?"checked":""}> Auto</label><button class=ghost id=ed>Akhiri</button>`:`<button class=btn id=ex>⬇ Export CSV</button><button class=ghost id=nr>Room Baru</button>`;
+const on=(i,f)=>{const e=$("#"+i);if(e)e.onclick=f};on("go2",next);on("nx",next);on("rv",reveal);on("ed",()=>upd({st:"end"}));on("ex",exp);on("nr",setup);const a=$("#au2");if(a)a.onchange=()=>upd({auto:a.checked?1:0})}
+const upd=o=>{room={...room,...o};B.setRoom(room);sync()};
+function next(){nexting=1;if(room.qi+1>=room.ids.length)upd({st:"end"});else upd({qi:room.qi+1,st:"q",ts:Date.now()})}
+function reveal(){upd({st:"rev"})}
+/* ===== ANSWER & TIMER ===== */
+function submit(){const Q=q();if(role!="s"||answered||room.st!="q"||!Q)return;const v=$("#ans").value.trim();if(!v)return;const a=parse(v);if(!a)return toast("Format jawaban belum benar");
+const s=LV[Q.L].s,el=(Date.now()-t0)/1000;if(el>s+.3)return;const ok=a[0]===Q.a[0]&&a[1]===Q.a[1];let p=0;
+if(ok){p=Math.round(LV[Q.L].x*(.5+.5*Math.max(0,1-el/s))*(1+.1*Math.min(me.streak,5)));me.streak++;me.xp+=p;me.ok++}else{me.streak=0;me.no++}
+me.ans[cur]={v,ok:ok?1:0,t:+el.toFixed(1),p};me.last=p;me.lq=cur;answered=true;$("#ans").disabled=true;B.setP(me.id,me);toast("Jawaban terkirim ✔");sync()}
+function ring(rem,s){const r=$("#ring");$("#rg").style.strokeDashoffset=226*(1-rem/s);r.className="ring"+(rem<=s*.1||rem<=3?" cr":rem<=s*.3?" lo":"");$("#rs").textContent=Math.ceil(rem);$("#bi").style.width=rem/s*100+"%";$("#sisa").textContent=`sisa ${rem.toFixed(1)}s`}
+function tick(){if(!ui||!room||!role)return;const Q=q();if(room.st=="q"&&Q){const s=LV[Q.L].s,rem=Math.max(0,s-(Date.now()-(role=="a"?room.ts:t0))/1000);ring(rem,s);
+if(role=="a"&&!revDone[room.qi]&&(rem<=0||(players.length&&players.every(p=>p.ans&&p.ans[room.qi])))){revDone[room.qi]=1;reveal()}
+if(role=="s"&&rem<=0&&!answered)$("#ans").disabled=true}
+else if(room.st=="rev"){ring(0,1);if(role=="a"&&room.auto){const nx=$("#nx"),r=Math.ceil((nextAt-Date.now())/1000);if(nx)nx.dataset.c=Math.max(0,r);if(Date.now()>=nextAt&&!nexting)next()}}}
+/* ===== EXPORT CSV ===== */
+async function exp(){const ids=room.ids.slice(0,Math.max(0,room.qi+1)),c=s=>'"'+String(s).replace(/"/g,'""')+'"';
+const H=["Peringkat","Nama","Kelas","Total XP","Benar","Salah","Tidak Dijawab","Akurasi %","Rata2 Waktu Benar (dtk)",...ids.map((id,i)=>`S${i+1} [L${BANK[id].L}] ${BANK[id].t} = ${fmt(BANK[id].a)}`)];
+const rows=rank().map((p,i)=>{const A=ids.map((_,k)=>p.ans&&p.ans[k]),ok=A.filter(a=>a&&a.ok),no=A.filter(a=>a&&!a.ok&&a.v!=="");return[i+1,p.name,p.cls,p.xp,ok.length,no.length,ids.length-ok.length-no.length,ids.length?Math.round(100*ok.length/ids.length):0,ok.length?(ok.reduce((s,a)=>s+a.t,0)/ok.length).toFixed(1):"",...A.map(a=>a&&a.v!==""?`${a.ok?"Benar":"Salah"} | jawab: ${a.v} | ${a.t}s | +${a.p}`:"Kosong")]});
+const data="\ufeff"+[H,...rows].map(r=>r.map(c).join(",")).join("\r\n"),fn=`hasil-${room.title.replace(/\W+/g,"-")}-${room.code}.csv`;
+try{const d=window.claude&&claude.use?await claude.use("downloads"):null;if(d)await d.save({filename:fn,data});else{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"text/csv"}));a.download=fn;a.click()}}catch(e){toast("Download dibatalkan")}}
+/* ===== BOOT ===== */
+for(let i=0;i<10;i++){const b=document.createElement("div"),s=20+Math.random()*60;b.className="bub";b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*20}s`;document.body.appendChild(b)}
+(async()=>{await B.init();B.watchRoom(r=>{room=r;loaded=true;sync()});B.watchP(l=>{players=l;sync()});login();setInterval(tick,100)})();
+</script></body></html>
