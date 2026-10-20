@@ -57,14 +57,14 @@ const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1)),pk=a=>a[ri(0,a.length-1)];
 const fa=(x,y)=>fr(x[0]*y[1]+y[0]*x[1],x[1]*y[1]),fs=(x,y)=>fr(x[0]*y[1]-y[0]*x[1],x[1]*y[1]),fd=(x,y)=>fr(x[0]*y[1],x[1]*y[0]),cmp=(p,q)=>p[0]*q[1]-q[0]*p[1];
 const val=o=>[o.w*o.d+o.n,o.d],pf=d=>({w:0,n:ri(1,d-1),d}),mf=d=>({w:ri(1,4),n:ri(1,d-1),d});
 const fh=o=>(o.w?`<b class=w>${o.w}</b>`:"")+`<span class=fr><i>${o.n}</i><u>${o.d}</u></span>`,ft=o=>(o.w?o.w+" ":"")+o.n+"/"+o.d;
-const fmt=a=>a[1]==1?""+a[0]:a[0]>a[1]?Math.floor(a[0]/a[1])+" "+a[0]%a[1]+"/"+a[1]:a[0]+"/"+a[1];
+const fmt=a=>a[1]==1?""+a[0]:a[0]+"/"+a[1];
 function gN(L){const m=[0,20,60,300,1500,9000][L],k=[0,2,3,3,4,5][L];let v=ri(Math.max(5,m/4|0),m),h=""+v;for(let i=1;i<k;i++){const x=ri(2,Math.max(3,m*.6|0));let o=rnd()<.5?"+":"−";if(o=="−"&&x>v)o="+";v+=o=="+"?x:-x;h+=` ${o} ${x}`}return{h,t:h,a:[v,1]}}
 function gM(L){const A=[0,[11,25],[12,60],[100,300],[120,500],[200,999]][L],B=[0,[2,5],[2,9],[3,9],[4,9],[6,9]][L],a=ri(...A),b=ri(...B);let p=a*b,h=rnd()<.4?`${b} × ${a}`:`${a} × ${b}`;if(L>=4){const c=ri(20,Math.min(p-1,L==4?400:900)),o=rnd()<.5?"+":"−";h+=` ${o} ${c}`;p=o=="+"?p+c:p-c}return{h,t:h,a:[p,1]}}
-function gF(L){const D=[0,[3,4,5,6,8],[2,3,4,5,6,8],[3,4,5,6,8],[2,3,4,5,6,8],[2,3,4,5,6]][L];let x,y,z,op=pk(["+","−"]),a,h,t;
-if(L<=3){if(L==1){const d=pk(D);x=pf(d);y=pf(d)}else if(L==2){x=pf(pk(D));do y=pf(pk(D));while(y.d==x.d)}else{x=mf(pk(D));y=pk([mf,pf])(pk(D))}
+function gF(L){const D=[0,[3,4,5,6,8],[2,3,4,5,6,8],[6,8,9,10,12],[2,3,4,5,6,8],[2,3,4,5,6]][L];let x,y,z,op=pk(["+","−"]),a,h,t;
+if(L<=3){if(L==1){const d=pk(D);x=pf(d);y=pf(d)}else if(L==2){x=pf(pk(D));do y=pf(pk(D));while(y.d==x.d)}else{x=pf(pk(D));y=pf(pk(D))}
 if(cmp(val(x),val(y))<0)[x,y]=[y,x];if(!cmp(val(x),val(y)))op="+";a=op=="+"?fa(val(x),val(y)):fs(val(x),val(y));h=fh(x)+` ${op} `+fh(y);t=ft(x)+` ${op} `+ft(y)}
-else if(L==4){x=pk([mf,pf])(pk(D));y=pf(pk(D));a=fd(val(x),val(y));h=fh(x)+" ÷ "+fh(y);t=ft(x)+" ÷ "+ft(y)}
-else{x=pk([mf,pf])(pk(D));y=pf(pk(D));z=pk([mf,pf])(pk(D));const q=fd(val(x),val(y));if(op=="−"&&cmp(q,val(z))<=0)op="+";a=op=="+"?fa(q,val(z)):fs(q,val(z));h=fh(x)+" ÷ "+fh(y)+` ${op} `+fh(z);t=ft(x)+" ÷ "+ft(y)+` ${op} `+ft(z)}
+else if(L==4){x=pf(pk(D));y=pf(pk(D));a=fd(val(x),val(y));h=fh(x)+" ÷ "+fh(y);t=ft(x)+" ÷ "+ft(y)}
+else{x=pf(pk(D));y=pf(pk(D));z=pf(pk(D));const q=fd(val(x),val(y));if(op=="−"&&cmp(q,val(z))<=0)op="+";a=op=="+"?fa(q,val(z)):fs(q,val(z));h=fh(x)+" ÷ "+fh(y)+` ${op} `+fh(z);t=ft(x)+" ÷ "+ft(y)+` ${op} `+ft(z)}
 return{h,t,a}}
 const BANK=[];(()=>{const seen=new Set(),Z=[0,[120,90,90],[30,22,23],[30,22,23],[10,8,7],[10,8,7]];let tr=0;for(let L=1;L<=5;L++)[["N",gN],["K",gM],["P",gF]].forEach(([c,g],j)=>{let k=0;while(k<Z[L][j]){const q=g(L);if(seen.has(c+q.t)&&tr++<400)continue;seen.add(c+q.t);BANK.push({L,c,...q});k++}});for(let i=BANK.length-1;i>0;i--){const j=ri(0,i);[BANK[i],BANK[j]]=[BANK[j],BANK[i]]}BANK.forEach((q,i)=>q.id=i)})();
 function pick(n,m){const sh=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);return sh(/^[1-5]$/.test(m)?BANK.filter(q=>q.L==+m):BANK).slice(0,n).map(q=>q.id)}
@@ -84,9 +84,19 @@ async setP(id,o){if(this.mode=="p2p"){if(this.cn&&this.cn.open)this.cn.send({t:"
 watchRoom(f){if(this.d)this.d.doc("quiz/room").onSnapshot(s=>f(s.exists?s.data():null),e=>toast("Sinkron gagal"));else this.R.push(f)},
 watchP(f){if(this.d)this.d.collection("players").onSnapshot(s=>f(s.docs.map(x=>x.data())),e=>toast("Sinkron gagal"));else this.P.push(f)},
 async clear(){if(this.mode=="p2p"){this.HP={};this.upP();return}if(this.d){const s=await this.d.collection("players").get();await Promise.all(s.docs.map(x=>this.d.doc("players/"+x.id).delete()))}else lsK().filter(k=>k.startsWith("bk:p:")).forEach(k=>{delete M[k];try{localStorage.removeItem(k)}catch(e){}})}};
+/* ===== SUARA (WebAudio, tanpa file) ===== */
+const SFX={ctx:null,sOn:true,mOn:false,mi:0,st:0,
+init(){if(!this.ctx){const C=window.AudioContext||window.webkitAudioContext;if(C)this.ctx=new C()}if(this.ctx&&this.ctx.state=="suspended")this.ctx.resume()},
+tone(f,d,ty="sine",v=.15,dl=0,mu=0){const c=this.ctx;if(!c||(mu?!this.mOn:!this.sOn))return;const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+dl;o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.02)},
+ping(){this.tone(880,.15,"sine",.2);this.tone(1320,.22,"sine",.15,.08)},pop(){this.tone(660,.1,"triangle",.2)},
+tick(s){this.tone(s<=2?1250:900,.08,"square",.1)},end(){this.tone(320,.55,"sawtooth",.12)},
+ok(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.25,"triangle",.2,i*.09))},bad(){this.tone(220,.3,"sawtooth",.12);this.tone(150,.45,"sawtooth",.12,.2)},
+rev(){this.tone(660,.2,"sine",.2);this.tone(990,.35,"sine",.2,.12)},win(){[523,659,784,659,784,1047].forEach((f,i)=>this.tone(f,.3,"triangle",.2,i*.15))},
+step(){const i=this.st++%32,Bs=[110,110,147,147,123.5,123.5,98,98],M=[0,2,4,7,5,7,4,2],sc=[262,294,330,392,440,523,587,659,784];if(i%4==0)this.tone(Bs[(i>>2)%8],.38,"triangle",.07,0,1);if(i%2==0)this.tone(sc[(M[(i>>1)%8]+(i>>4)*2)%9],.18,"square",.02,0,1)},
+music(on){if(!this.ctx||!this.mOn)on=false;if(on&&!this.mi)this.mi=setInterval(()=>this.step(),210);else if(!on&&this.mi){clearInterval(this.mi);this.mi=0}}};
 /* ===== STATE & UTIL ===== */
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let room,loaded=false,players=[],role=null,me=null,ui=false,cur=-1,t0=0,answered=false,lastSt="",lastQ=-2,lastCtl="",nextAt=0,nexting=0,revDone={},missed={},shown={};
+let pc=0,lastSec=-1,room,loaded=false,players=[],role=null,me=null,ui=false,cur=-1,t0=0,answered=false,lastSt="",lastQ=-2,lastCtl="",nextAt=0,nexting=0,revDone={},missed={},shown={};
 const CM=new Map(),BM=new Map(),PM=new Map();
 function toast(t){const e=$("#toast");e.textContent=t;e.className="on";clearTimeout(toast.t);toast.t=setTimeout(()=>e.className="",2500)}
 const q=()=>room&&room.qi>=0&&room.ids?BANK[room.ids[room.qi]]:null,rank=()=>[...players].sort((a,b)=>b.xp-a.xp||a.name.localeCompare(b.name));
@@ -97,7 +107,7 @@ function cnt(e,to){const from=+e._v||0;e._v=to;if(from===to){e.textContent=to+" 
 function burst(){const b=document.createElement("div");b.className="burst";b.innerHTML=Array.from({length:16},()=>`<i style="--x:${Math.round(Math.random()*320-160)}px;--y:${-Math.round(60+Math.random()*220)}px;--r:${Math.round(Math.random()*180-90)}deg">${pk(["⭐","✨","🎉","🔥"])}</i>`).join("");document.body.appendChild(b);setTimeout(()=>b.remove(),1500)}
 function parse(s){s=s.replace(/,/g,".").trim();let m;if(m=s.match(/^(\d+)$/))return[+m[1],1];if(m=s.match(/^(\d+)\s*\/\s*(\d+)$/))return+m[2]?fr(+m[1],+m[2]):null;if(m=s.match(/^(\d+)\s+(\d+)\s*\/\s*(\d+)$/))return+m[3]?fr(+m[1]*+m[3]+ +m[2],+m[3]):null;return null}
 /* ===== SCREENS ===== */
-function login(){role=null;me=null;ui=false;CM.clear();BM.clear();PM.clear();lastQ=-2;lastCtl="";const sv=JSON.parse(lsG("bk:me")||"{}");
+function login(){SFX.music(false);role=null;me=null;ui=false;CM.clear();BM.clear();PM.clear();lastQ=-2;lastCtl="";const sv=JSON.parse(lsG("bk:me")||"{}");
 $("#app").innerHTML=`<div class=hero><div class=logo>Σ</div><h1>MathLive</h1><p>SMK Bina Adzkia · Kuis Operasi Bilangan</p></div><div class=card><div class=tabs><button class=on data-t=s>Siswa</button><button data-t=a>Admin</button></div>
 <div id=fs><input id=nm placeholder="Nama siswa" maxlength=24 value="${esc(sv.n||"")}"><input id=kl placeholder="Kelas (mis. X TJKT 1)" maxlength=16 value="${esc(sv.k||"")}"><input id=kd placeholder="Kode room (4 angka)" inputmode=numeric maxlength=4><button class=btn id=go>Masuk Room</button></div>
 <div id=fa hidden><input id=au placeholder=Username autocapitalize=none><input id=ap type=password placeholder=Password><button class=btn id=ga>Masuk Admin</button></div><div id=err></div></div><p class=hint style="text-align:center">Mode: ${{online:"Online (multi-perangkat)",p2p:"Online P2P (komputer admin jadi server, jangan ditutup)",lokal:"Lokal (satu perangkat/browser)"}[B.mode]}</p>`;
@@ -105,37 +115,37 @@ document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.que
 const er=t=>$("#err").textContent=t;
 $("#go").onclick=async()=>{const n=$("#nm").value.trim(),k=$("#kl").value.trim(),c=$("#kd").value.trim();if(!n||!k||!c)return er("Lengkapi nama, kelas, dan kode room");const p2=B.mode=="p2p";if(p2){er("Menghubungkan ke room…");$("#go").disabled=true;try{await B.join(c)}catch(e){$("#go").disabled=false;return er("Room tidak ditemukan. Cek kode dan pastikan admin sudah membuat room.")}}else{if(!loaded)return er("Menghubungkan… coba lagi");if(!room||room.code!==c||room.st==="end")return er("Room tidak ditemukan atau sudah selesai")}
 lsS("bk:me",JSON.stringify({n,k}));const id="p"+Math.abs([...(n+k+c).toLowerCase()].reduce((h,ch)=>h*31+ch.charCodeAt(0)|0,7)).toString(36);
-const m0=players.find(p=>p.id===id)||{id,name:n,cls:k,code:c,xp:0,streak:0,ok:0,no:0,last:0,lq:-1,ans:{}};m0.ans=m0.ans||{};me=m0;role="s";if(p2){let got=0;B.onme=p=>{got=1;me=p;me.ans=me.ans||{}};B.onclose=()=>{if(role=="s"&&ui){toast("Terputus dari room");login()}};B.cn.send({t:"join",p:m0});for(let i=0;i<40&&!(got&&room);i++)await new Promise(r=>setTimeout(r,100));if(!room||room.st==="end"){role=null;me=null;$("#go").disabled=false;return er("Room sudah selesai atau tidak merespons")}}else B.setP(id,me);game()};
-$("#ga").onclick=()=>{if($("#au").value!=="admin"||$("#ap").value!=="admin")return er("Username atau password salah");role="a";room&&room.st!=="end"?game():setup()};}
+const m0=players.find(p=>p.id===id)||{id,name:n,cls:k,code:c,xp:0,streak:0,ok:0,no:0,last:0,lq:-1,ans:{}};m0.ans=m0.ans||{};me=m0;role="s";shown={};missed={};cur=-1;if(p2){let got=0;B.onme=p=>{got=1;me=p;me.ans=me.ans||{}};B.onclose=()=>{if(role=="s"&&ui){toast("Terputus dari room");login()}};B.cn.send({t:"join",p:m0});for(let i=0;i<40&&!(got&&room);i++)await new Promise(r=>setTimeout(r,100));if(!room||room.st==="end"){role=null;me=null;$("#go").disabled=false;return er("Room sudah selesai atau tidak merespons")}}else B.setP(id,me);game()};
+$("#ga").onclick=()=>{if($("#au").value!=="admin"||$("#ap").value!=="admin")return er("Username atau password salah");role="a";SFX.mOn=true;SFX.init();room&&room.st!=="end"?game():setup()};}
 function setup(){$("#app").innerHTML=`<div class=hero><div class=logo>Σ</div><h1>Panel Admin</h1></div><div class=card><label>Judul kuis</label><input id=tt value="Operasi Bilangan"><label>Jumlah soal</label><select id=qn><option>10<option>20<option selected>30<option>50<option>100</select><label>Tingkat kesulitan</label><select id=md><option value=a>Acak campuran (L1 60% · L2 15% · L3 15% · L4 5% · L5 5%)${[1,2,3,4,5].map(l=>`<option value=${l}>Level ${l} · ${LV[l].n} (${LV[l].s} dtk · ${LV[l].x} XP)`).join("")}</select><label class=ck><input type=checkbox id=ao checked> Soal berikutnya otomatis</label><button class=btn id=mk>Buat Room</button><p class=hint>Bank soal: ${BANK.length} soal diacak · L1 300 · L2 75 · L3 75 · L4 25 · L5 25</p><button class=ghost id=bk style="width:100%;margin-top:8px">Kembali</button></div>`;
 $("#bk").onclick=login;$("#mk").onclick=async()=>{const o={code:""+(1000+Math.floor(Math.random()*9000)),title:$("#tt").value||"Kuis",ids:pick(+$("#qn").value,$("#md").value),qi:-1,st:"lobby",ts:0,auto:$("#ao").checked?1:0};if(B.mode=="p2p"){let ok=0;for(let i=0;i<6&&!ok;i++){try{await B.host(o.code);ok=1}catch(e){o.code=""+(1000+Math.floor(Math.random()*9000))}}if(!ok)return toast("Gagal terhubung ke server P2P. Cek internet.")}await B.clear();players=[];revDone={};nexting=0;cur=-1;missed={};shown={};await B.setRoom(o);room=o;game()}}
 function game(){ui=true;CM.clear();BM.clear();PM.clear();lastQ=-2;lastCtl="";
-$("#app").innerHTML=`<div class=top><b>SMK Bina Adzkia</b><span id=rc class=badge></span><span class="badge ${B.mode!="lokal"?"on":""}">● ${B.mode!="lokal"?"Online":"Lokal"}</span><button class=ghost id=out style="padding:5px 10px">Keluar</button></div>
+$("#app").innerHTML=`<div class=top><b>SMK Bina Adzkia</b><span id=rc class=badge></span><span class="badge ${B.mode!="lokal"?"on":""}">● ${B.mode!="lokal"?"Online":"Lokal"}</span><button class=ghost id=sx style="padding:5px 9px">🔊</button><button class=ghost id=mx style="padding:5px 9px">🎵</button><button class=ghost id=out style="padding:5px 10px">Keluar</button></div>
 <section id=lobby><div class=pan style="text-align:center"><div class=mas>🧠</div><div class=hint>KODE ROOM</div><div class=code id=cd></div><div class=dots>Menunggu peserta <span>•</span><span>•</span><span>•</span></div><div class=pls id=pls></div></div></section>
 <section id=live hidden><div class=qcard id=qc><div class=qh><span class=tag id=qn></span><span class=tag id=ql></span><span class=tag id=qk></span></div><div class=qrow><div class=qtxt id=qt></div><div class=ring id=ring><svg viewBox="0 0 84 84"><circle class=rb cx=42 cy=42 r=36 /><circle id=rg class=rf cx=42 cy=42 r=36 transform="rotate(-90 42 42)"/></svg><div class=rn><b id=rs>0</b><small>DTK</small></div></div></div><div class=bar><i id=bi></i></div><div class=bt><span>WAKTU MENJAWAB</span><span id=sisa></span></div><div id=res></div></div>
 <div class=pan id=aa hidden><input id=ans placeholder="Ketik jawabanmu…" autocomplete=off autocapitalize=none enterkeyhint=send><button class=btn id=sub>Kirim Jawaban</button><div class=hint id=hint></div></div>
 <div class=pan><h3>TERCEPAT MENJAWAB</h3><div class=fast id=fast></div></div></section>
 <section id=fin hidden><div class=pan style="text-align:center"><div class=trophy>🏆</div><h2 id=champ style="margin:6px 0"></h2><div id=mine class=hint></div></div></section>
 <div class=pan id=bp hidden><h3>PAPAN SKOR</h3><div class=board id=board></div><div class=hint id=myrank></div></div><div class=ctl id=ctl></div>`;
-$("#out").onclick=login;$("#sub").onclick=submit;$("#ans").onkeydown=e=>{if(e.key=="Enter")submit()};sync()}
+$("#out").onclick=login;const tg=()=>{$("#sx").textContent=SFX.sOn?"🔊":"🔇";$("#mx").style.opacity=SFX.mOn?1:.4};$("#sx").onclick=()=>{SFX.init();SFX.sOn=!SFX.sOn;tg()};$("#mx").onclick=()=>{SFX.init();SFX.mOn=!SFX.mOn;tg();sync()};tg();$("#sub").onclick=submit;$("#ans").onkeydown=e=>{if(e.key=="Enter")submit()};sync()}
 /* ===== SYNC (render) ===== */
 function sync(){if(!ui||!room||!role)return;if(role=="s"&&room.code!==me.code){toast("Room diganti admin");return login()}
-const st=room.st,Q=q();$("#rc").textContent="Room "+room.code;$("#lobby").hidden=st!="lobby";$("#live").hidden=!(st=="q"||st=="rev");$("#fin").hidden=st!="end";$("#bp").hidden=st=="lobby";
+const st=room.st,Q=q();SFX.music(st=="q"||st=="lobby");$("#rc").textContent="Room "+room.code;$("#lobby").hidden=st!="lobby";$("#live").hidden=!(st=="q"||st=="rev");$("#fin").hidden=st!="end";$("#bp").hidden=st=="lobby";
 if(role=="s"){if(st=="q"&&room.qi!==cur){cur=room.qi;t0=Date.now();answered=!!me.ans[cur];$("#ans").value="";$("#ans").disabled=answered}
 if(st=="rev"&&!me.ans[room.qi]&&!missed[room.qi]){missed[room.qi]=1;me.streak=0;me.no++;me.ans[room.qi]={v:"",ok:0,t:null,p:0};me.last=0;me.lq=room.qi;B.setP(me.id,me)}}
 else if(st!==lastSt){if(st=="rev")nextAt=Date.now()+5000;nexting=0}lastSt=st;
 if(st=="lobby"){$("#cd").textContent=room.code;keyed($("#pls"),PM,players,p=>{const e=document.createElement("span");e.className="pl";return e},(e,p)=>e.textContent=p.name+" · "+p.cls)}
 if(Q&&(st=="q"||st=="rev")){$("#qn").textContent=`SOAL ${room.qi+1}/${room.ids.length}`;$("#ql").textContent=`Level ${Q.L} · ${LV[Q.L].n} · ${LV[Q.L].x} XP`;$("#qk").textContent=CN[Q.c];$("#qt").innerHTML=Q.h;
-$("#hint").textContent=(Q.c=="P"?"Tulis pecahan 3/4 atau campuran 1 2/3 · ":"Jawab dengan bilangan bulat · ")+(me?`🔥 Streak ${me.streak} · bonus ×${(1+.1*Math.min(me.streak,5)).toFixed(1)}`:"");
+$("#hint").textContent=(Q.c=="P"?"Tulis satu pecahan, mis. 3/4 atau 17/12 (tanpa pecahan campuran) · ":"Jawab dengan bilangan bulat · ")+(me?`🔥 Streak ${me.streak} · bonus ×${(1+.1*Math.min(me.streak,5)).toFixed(1)}`:"");
 $("#aa").hidden=!(role=="s"&&st=="q");
-if(lastQ!==room.qi){lastQ=room.qi;$("#fast").innerHTML="";CM.clear();$("#res").innerHTML="";const c=$("#qc");c.style.animation="none";void c.offsetWidth;c.style.animation=""}
-const fl=players.filter(p=>p.ans&&p.ans[room.qi]&&p.ans[room.qi].t!=null).sort((a,b)=>a.ans[room.qi].t-b.ans[room.qi].t);
+if(lastQ!==room.qi){lastQ=room.qi;pc=0;lastSec=-1;$("#fast").innerHTML="";CM.clear();$("#res").innerHTML="";const c=$("#qc");c.style.animation="none";void c.offsetWidth;c.style.animation=""}
+const fl=players.filter(p=>p.ans&&p.ans[room.qi]&&p.ans[room.qi].t!=null).sort((a,b)=>a.ans[room.qi].t-b.ans[room.qi].t);if(st=="q"&&fl.length>pc)SFX.ping();pc=fl.length;
 keyed($("#fast"),CM,fl,p=>{const e=document.createElement("div");e.className="chip";e.innerHTML="<span class=av></span><span class=nm></span><div class=tm></div><b class=vl></b><div class=xx></div>";avt(e.firstChild,p.name);e.querySelector(".nm").textContent=p.name;return e},(e,p,i)=>{const a=p.ans[room.qi],r=st=="rev";e.style.order=i;e.className="chip"+(r?a.ok?" ok":" bad":"");e.querySelector(".tm").textContent="⏱ "+a.t.toFixed(1)+"s";e.querySelector(".vl").textContent=r?(a.v||"—")+(a.ok?" ✓":" ✗"):"•••";e.querySelector(".xx").textContent="⭐ "+p.xp+(r&&a.ok?" (+"+a.p+")":"")});
-if(st=="rev"){let h=`<span class=g>Jawaban benar: ${fmt(Q.a)}</span>`;if(me){const a=me.ans[room.qi];if(a&&a.ok){h+=`<br><span class=g>✅ Benar! +${a.p} XP</span>`;if(!shown[room.qi]){shown[room.qi]=1;burst()}}else h+=`<br><span class=r>❌ ${a&&a.v?"Belum tepat":"Waktu habis"}</span>`}$("#res").innerHTML=h}}
+if(st=="rev"){if(!shown["s"+room.qi]){shown["s"+room.qi]=1;const a0=me&&me.ans[room.qi];a0&&a0.ok?SFX.ok():me?SFX.bad():SFX.rev()}let h=`<span class=g>Jawaban benar: ${fmt(Q.a)}</span>`;if(me){const a=me.ans[room.qi];if(a&&a.ok){h+=`<br><span class=g>✅ Benar! +${a.p} XP</span>`;if(!shown[room.qi]){shown[room.qi]=1;burst()}}else h+=`<br><span class=r>❌ ${a&&a.v?"Belum tepat":"Waktu habis"}</span>`}$("#res").innerHTML=h}}
 if(st!="lobby"){const all=rank(),shownL=st=="end"?all:all.slice(0,8);$("#board").style.height=shownL.length*50+"px";
 keyed($("#board"),BM,shownL,p=>{const e=document.createElement("div");e.className="row";e.innerHTML="<span class=rk></span><span class=av></span><span class=nm></span><span class=xp></span><span class=dl></span>";avt(e.children[1],p.name);e.children[2].innerHTML=`${esc(p.name)}<small>${esc(p.cls)}</small>`;return e},(e,p,i)=>{e.style.transform=`translateY(${i*50}px)`;e.children[0].textContent=i+1;cnt(e.children[3],p.xp);const d=st=="rev"&&p.lq===room.qi&&p.last>0?"+"+p.last:"";if(e._d!==d){e._d=d;e.children[4].textContent=d;e.children[4].style.animation="none";void e.offsetWidth;e.children[4].style.animation=""}});
 if(me){const i=all.findIndex(p=>p.id===me.id);$("#myrank").textContent=i>=0?`Peringkatmu: #${i+1} dari ${all.length} · ${all[i].xp} XP`:""}}
-if(st=="end"){const w=rank()[0];$("#champ").textContent=w?`Juara: ${w.name} (${w.xp} XP)`:"Kuis selesai";$("#mine").textContent=me?`Hasilmu: ${me.ok} benar · ${me.no} salah · ${me.xp} XP`:""}
+if(st=="end"){if(!shown.end){shown.end=1;SFX.win()}const w=rank()[0];$("#champ").textContent=w?`Juara: ${w.name} (${w.xp} XP)`:"Kuis selesai";$("#mine").textContent=me?`Hasilmu: ${me.ok} benar · ${me.no} salah · ${me.xp} XP`:""}
 if(role=="a")ctl()}
 function ctl(){const st=room.st,k=st+room.qi+room.auto+players.length*(st=="lobby");if(k===lastCtl)return;lastCtl=k;const c=$("#ctl");
 c.innerHTML=st=="lobby"?`<button class=btn id=go2>▶ Mulai Kuis (${room.ids.length} soal)</button>`:st=="q"?`<button class=btn id=rv>Tampilkan Jawaban</button><button class=ghost id=ed>Akhiri</button>`:st=="rev"?`<button class=btn id=nx data-c="">Soal Berikutnya</button><label><input type=checkbox id=au2 ${room.auto?"checked":""}> Auto</label><button class=ghost id=ed>Akhiri</button>`:`<button class=btn id=ex>⬇ Export CSV</button><button class=ghost id=nr>Room Baru</button>`;
@@ -147,9 +157,9 @@ function reveal(){upd({st:"rev"})}
 function submit(){const Q=q();if(role!="s"||answered||room.st!="q"||!Q)return;const v=$("#ans").value.trim();if(!v)return;const a=parse(v);if(!a)return toast("Format jawaban belum benar");
 const s=LV[Q.L].s,el=(Date.now()-t0)/1000;if(el>s+.3)return;const ok=a[0]===Q.a[0]&&a[1]===Q.a[1];let p=0;
 if(ok){p=Math.round(LV[Q.L].x*(.5+.5*Math.max(0,1-el/s))*(1+.1*Math.min(me.streak,5)));me.streak++;me.xp+=p;me.ok++}else{me.streak=0;me.no++}
-me.ans[cur]={v,ok:ok?1:0,t:+el.toFixed(1),p};me.last=p;me.lq=cur;answered=true;$("#ans").disabled=true;B.setP(me.id,me);toast("Jawaban terkirim ✔");sync()}
+me.ans[cur]={v,ok:ok?1:0,t:+el.toFixed(1),p};me.last=p;me.lq=cur;answered=true;$("#ans").disabled=true;B.setP(me.id,me);toast("Jawaban terkirim ✔");SFX.pop();sync()}
 function ring(rem,s){const r=$("#ring");$("#rg").style.strokeDashoffset=226*(1-rem/s);r.className="ring"+(rem<=s*.1||rem<=3?" cr":rem<=s*.3?" lo":"");$("#rs").textContent=Math.ceil(rem);$("#bi").style.width=rem/s*100+"%";$("#sisa").textContent=`sisa ${rem.toFixed(1)}s`}
-function tick(){if(!ui||!room||!role)return;const Q=q();if(room.st=="q"&&Q){const s=LV[Q.L].s,rem=Math.max(0,s-(Date.now()-(role=="a"?room.ts:t0))/1000);ring(rem,s);
+function tick(){if(!ui||!room||!role)return;const Q=q();if(room.st=="q"&&Q){const s=LV[Q.L].s,rem=Math.max(0,s-(Date.now()-(role=="a"?room.ts:t0))/1000);ring(rem,s);const sc0=Math.ceil(rem);if(sc0!==lastSec){lastSec=sc0;if(sc0>0&&sc0<=5)SFX.tick(sc0);else if(sc0==0)SFX.end()}
 if(role=="a"&&!revDone[room.qi]&&(rem<=0||(players.length&&players.every(p=>p.ans&&p.ans[room.qi])))){revDone[room.qi]=1;reveal()}
 if(role=="s"&&rem<=0&&!answered)$("#ans").disabled=true}
 else if(room.st=="rev"){ring(0,1);if(role=="a"&&room.auto){const nx=$("#nx"),r=Math.ceil((nextAt-Date.now())/1000);if(nx)nx.dataset.c=Math.max(0,r);if(Date.now()>=nextAt&&!nexting)next()}}}
@@ -161,5 +171,5 @@ const data="\ufeff"+[H,...rows].map(r=>r.map(c).join(",")).join("\r\n"),fn=`hasi
 try{const d=window.claude&&claude.use?await claude.use("downloads"):null;if(d)await d.save({filename:fn,data});else{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"text/csv"}));a.download=fn;a.click()}}catch(e){toast("Download dibatalkan")}}
 /* ===== BOOT ===== */
 for(let i=0;i<10;i++){const b=document.createElement("div"),s=20+Math.random()*60;b.className="bub";b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*20}s`;document.body.appendChild(b)}
-(async()=>{await B.init();B.watchRoom(r=>{room=r;loaded=true;sync()});B.watchP(l=>{players=l;sync()});login();setInterval(tick,100)})();
+(async()=>{document.addEventListener("pointerdown",()=>SFX.init());await B.init();B.watchRoom(r=>{room=r;loaded=true;sync()});B.watchP(l=>{players=l;sync()});login();setInterval(tick,100)})();
 </script></body></html>
